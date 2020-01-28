@@ -4,61 +4,49 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.5.2
     container_name: es01
     environment:
-      - node.name=es01
-      - cluster.name=es-docker-cluster
-      - discovery.seed_hosts=es02,es03
-      - cluster.initial_master_nodes=es01,es02,es03
-      - bootstrap.memory_lock=false
       - "ES_JAVA_OPTS=-Xms2G -Xmx2G"
     ulimits:
       memlock:
         soft: -1
         hard: -1
     volumes:
+      - ./config/es01.yml:/usr/share/elasticsearch/config/elasticsearch.yml
       - data01:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
     networks:
       elastic:
-        ipv4_address: 192.168.11.2
+        ipv4_address: 192.168.10.2
   es02:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.5.2
     container_name: es02
     environment:
-      - node.name=es02
-      - cluster.name=es-docker-cluster
-      - discovery.seed_hosts=es01,es03
-      - cluster.initial_master_nodes=es01,es02,es03
-      - bootstrap.memory_lock=false
       - "ES_JAVA_OPTS=-Xms2G -Xmx2G"
     ulimits:
       memlock:
         soft: -1
         hard: -1
     volumes:
+      - ./config/es02.yml:/usr/share/elasticsearch/config/elasticsearch.yml
       - data02:/usr/share/elasticsearch/data
     networks:
       elastic:
-        ipv4_address: 192.168.11.3
+        ipv4_address: 192.168.10.3
   es03:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.5.2
     container_name: es03
     environment:
-      - node.name=es03
-      - cluster.name=es-docker-cluster
-      - discovery.seed_hosts=es01,es02
-      - cluster.initial_master_nodes=es01,es02,es03
-      - bootstrap.memory_lock=false
       - "ES_JAVA_OPTS=-Xms2G -Xmx2G"
     ulimits:
       memlock:
         soft: -1
         hard: -1
     volumes:
+      - ./config/es03.yml:/usr/share/elasticsearch/config/elasticsearch.yml
       - data03:/usr/share/elasticsearch/data
     networks:
       elastic:
-        ipv4_address: 192.168.11.4
+        ipv4_address: 192.168.10.4
 
 volumes:
   data01:
@@ -73,5 +61,5 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 192.168.11.0/29
+        - subnet: 192.168.10.0/29
         

@@ -1,0 +1,16 @@
+cluster:
+  name: es-cluster
+node:
+  name: es02
+discovery:
+  seed_hosts:
+    - 192.168.10.2
+    - 192.168.10.3
+    - 192.168.10.4
+network:
+  host: 192.168.10.3
+path:
+  data: /usr/share/elasticsearch/data
+  logs: /usr/share/elasticsearch/log
+bootstrap:
+  memory_lock: true
